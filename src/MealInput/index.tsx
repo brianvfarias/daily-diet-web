@@ -1,6 +1,4 @@
-// import { useRef } from "react";
-
-import { useRef } from "react";
+import { useState } from "react";
 export interface MealType {
   title: string,
   belongsToDiet: boolean,
@@ -13,18 +11,14 @@ interface MealInputProps {
 }
 
 export function MealInput({ addMeal }: MealInputProps) {
-
-  const today = new Date();
-  const dateObj = {
-    day: today.getDate(),
-    month: String(today.getMonth() + 1).padStart(2, '0'),
-    year: today.getFullYear(),
+  function createCurrentDate() {
+    const now = new Date();
+    return `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDay().toString().padStart(2, '0')}`
   }
-  const resetDate = `${dateObj.year}-${dateObj.month}-${dateObj.day}`
-  const title = useRef<HTMLInputElement | null>(null);
-  const description = useRef<HTMLInputElement | null>(null);
-  const date = useRef<HTMLInputElement | null>(null);
-  const belongsToDiet = useRef<HTMLInputElement | null>(null);
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [date, setDate] = useState<string>(createCurrentDate());
+  const [belongsToDiet, setBelongsToDiet] = useState<boolean>(true);
 
   return (
     <form action="" className="flex flex-col justify-center items-center">
@@ -34,43 +28,47 @@ export function MealInput({ addMeal }: MealInputProps) {
           Meal Title
         </label>
         <input
-          ref={title}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           className="bg-slate-200 p-1 px-4 rounded focus:border-cyan-800 outline-none" type="text" id="title" />
         <label htmlFor="">
           Meal Description
         </label>
         <input
-          ref={description}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           className="bg-slate-200 p-1 px-4 rounded focus:border-cyan-800 outline-none" type="text" id="desc" />
         <label htmlFor="">
           Meal Date
         </label>
         <input
-          ref={date}
-          defaultValue={resetDate}
+          value={date}
+          onChange={(e) => setTitle(e.target.value)}
           className="bg-slate-200 py1- px-4 rounded focus:outline-fuchsia-300" type="date" id="date"
         />
         <label htmlFor="">
-          Meal Title
+          Belongs to Diet
         </label>
-        <input className="bg-slate-200 p-1 px-4 rounded focus:border-cyan-800 outline-none self-start" type="checkbox" checked
-          ref={belongsToDiet}
+        <input className="bg-slate-200 p-1 px-4 rounded focus:border-cyan-800 outline-none self-start" type="checkbox" defaultChecked
+          onClick={() => setBelongsToDiet(!belongsToDiet)}
           id="Title" />
 
         <button
           onClick={(e) => {
             e.preventDefault();
             const meal = {
-              title: title.current!.value,
-              description: description.current!.value,
-              belongsToDiet: belongsToDiet.current!.checked,
-              date: date.current!.value
+              title,
+              description,
+              belongsToDiet,
+              date
             }
             addMeal(meal)
-            title.current!.value = '';
-            description.current!.value = '';
-            belongsToDiet.current!.checked = true;
-            date.current!.value = resetDate;
+            console.log()
+            setTitle('');
+            setDescription('');
+            setBelongsToDiet(true);
+            const now = createCurrentDate()
+            setDate(now)
           }}
           className="bg-blue-500 cursor-pointer border-none rounded-lg h-8 my-1">Record Meal +</button>
       </fieldset>

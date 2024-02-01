@@ -14,7 +14,6 @@ export function App() {
       {
         meals.length > 0 ?
           meals.map((meal, idx) => {
-            console.log(meal)
             return <MealRecord key={idx} title={meal.title} description={meal.description} date={meal.date}
               belongsToDiet={meal.belongsToDiet} />
           })
