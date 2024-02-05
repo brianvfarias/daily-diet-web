@@ -5,18 +5,28 @@ import { MealRecord } from './MealRecord';
 export function App() {
   const [meals, setMeals] = useState<MealType[]>([]);
   function handleAddMeal(meal: MealType) {
-    setMeals(prev => [...prev, meal])
+    setMeals(prev => {
+      const meals = [...prev, meal]
+      return meals.sort((m1, m2) => new Date(m1.date).getTime() - new Date(m2.date).getTime())
+    })
   }
   return (
-    <main className="m-auto">
+    <main className="bg-blue-300">
       <MealInput addMeal={handleAddMeal} />
 
       {
         meals.length > 0 ?
-          meals.map((meal, idx) => {
-            return <MealRecord key={idx} title={meal.title} description={meal.description} date={meal.date}
-              belongsToDiet={meal.belongsToDiet} />
-          })
+          <section className="flex flex-col justify-center items-center m-auto">
+            {meals.map((meal, idx) => {
+              if (idx < 5)
+                return (
+                  <div className="flex justify-center max-w-50 ">
+                    <MealRecord key={new Date().getTime()} title={meal.title} description={meal.description} date={meal.date}
+                      belongsToDiet={meal.belongsToDiet} />
+                  </div>
+                )
+            })}
+          </section>
           : null
       }
     </main>
