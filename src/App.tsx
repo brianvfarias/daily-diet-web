@@ -20,7 +20,7 @@ export function App() {
             {meals.map((meal, idx) => {
               if (idx < 5)
                 return (
-                  <div className="flex justify-center max-w-50 ">
+                  <div key={new Date().getTime()} className="flex justify-center max-w-50 ">
                     <MealRecord key={new Date().getTime()} title={meal.title} description={meal.description} date={meal.date}
                       belongsToDiet={meal.belongsToDiet} />
                   </div>
