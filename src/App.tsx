@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { MealInput, MealType } from './MealInput'
 import { MealRecord } from './MealRecord';
+import { Table, TableBody, TableHead, TableHeader, TableRow } from './components/ui/table';
 
 export function App() {
   const [meals, setMeals] = useState<MealType[]>([]);
@@ -14,22 +15,37 @@ export function App() {
     <main className="bg-blue-300">
       <MealInput addMeal={handleAddMeal} />
 
-      {
-        meals.length > 0 ?
-          <section className="flex flex-col justify-center items-center m-auto">
-            {meals.map((meal, idx) => {
-              if (idx < 5)
+      <Table className="flex items-center justify-center rounded border">
+        <TableHeader>
+          <TableRow>
+            <TableHead>
+              Title
+            </TableHead>
+            <TableHead>
+              Description
+            </TableHead>
+            <TableHead>
+              Time
+            </TableHead>
+            <TableHead>
+              Belongs to diet
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        {
+          meals.length > 0 ?
+            <TableBody className="flex flex-col justify-center items-center m-auto">
+              {meals.map((meal) => {
                 return (
-                  <div key={new Date().getTime()} className="flex justify-center max-w-50 ">
-                    <MealRecord key={new Date().getTime()} title={meal.title} description={meal.description} date={meal.date}
-                      belongsToDiet={meal.belongsToDiet} />
-                  </div>
+                  <MealRecord id={meal.id} title={meal.title} description={meal.description} date={meal.date}
+                    belongsToDiet={meal.belongsToDiet} />
                 )
-            })}
-          </section>
-          : null
-      }
-    </main>
+              })}
+            </TableBody>
+            : null
+        }
+      </Table>
+    </main >
   )
 }
 
