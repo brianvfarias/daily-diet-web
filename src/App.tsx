@@ -15,26 +15,26 @@ export function App() {
     <main className="bg-blue-300">
       <MealInput addMeal={handleAddMeal} />
 
-      <Table className="flex items-center justify-center rounded border">
+      <Table className="flex flex-col items-center justify-center rounded border w-[32rem] mx-auto my-4">
         <TableHeader>
-          <TableRow>
-            <TableHead>
+          <TableRow className="flex justify-between">
+            <TableHead className="text-xl">
               Title
             </TableHead>
-            <TableHead>
+            <TableHead className="text-xl">
               Description
             </TableHead>
-            <TableHead>
+            <TableHead className="text-xl">
               Time
             </TableHead>
-            <TableHead>
+            <TableHead className="text-xl">
               Belongs to diet
             </TableHead>
           </TableRow>
         </TableHeader>
         {
           meals.length > 0 ?
-            <TableBody className="flex flex-col justify-center items-center m-auto">
+            <TableBody className="">
               {meals.map((meal) => {
                 return (
                   <MealRecord id={meal.id} title={meal.title} description={meal.description} date={meal.date}
