@@ -2,7 +2,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { MealType } from "../MealInput";
 
 export function MealRecord({ belongsToDiet, date, title, description }: MealType) {
-  const bgColor = belongsToDiet === true ? 'bg-green-300' : 'bg-red-300'
+  const bgColor = belongsToDiet === true ? 'bg-green-200' : 'bg-red-200'
   return (
     <TableRow className={`${bgColor}`}>
       <TableCell className="font-bold text-xl">{title}</TableCell>
