@@ -15,6 +15,7 @@ export interface MealType {
   belongsToDiet: boolean,
   description?: string,
   date: string
+  show?: boolean
 }
 
 interface MealInputProps {
@@ -49,8 +50,11 @@ export function MealInput({ addMeal }: MealInputProps) {
     const { date, description, title } = data
     addMeal({
       id,
-      date, description, title
-      , belongsToDiet: !!data.belongsToDiet
+      date,
+      description,
+      title,
+      belongsToDiet: !!data.belongsToDiet,
+      show: true
     })
     form.control._reset()
   }
