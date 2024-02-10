@@ -62,8 +62,8 @@ export function MealInput({ addMeal }: MealInputProps) {
   return (
     <div className="flex items-center justify-center">
       <Dialog>
-        <DialogTrigger className="mt-4" asChild>
-          <Button variant={"default"}>Add new Meal</Button>
+        <DialogTrigger asChild>
+          <Button className="w-auto md:w-44 lg:w-80" variant={"secondary"}>Add new Meal</Button>
         </DialogTrigger>
         <DialogContent className="bg-slate-600">
           <DialogHeader>

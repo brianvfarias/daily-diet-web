@@ -2,17 +2,13 @@ import { useReducer } from 'react'
 import { MealInput, MealType } from './MealInput'
 import { MealRecord } from './MealRecord';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from './components/ui/table';
-import { Form, FormControl, FormField, FormItem, FormLabel } from './components/ui/form';
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from './components/ui/input';
+import { MealFilterType, MealSearch } from './MealSearch';
 import { Button } from './components/ui/button';
+import { MealAnalytics } from './MealAnalytics';
 
-interface MealFilterType {
-  dateFilter: string,
-  titleFilter: string
-}
+
+
 interface MealState {
   meals: MealType[]
 }
@@ -22,10 +18,7 @@ interface Action {
   payload: MealType | MealFilterType | null
 }
 
-const mealsFilter = z.object({
-  dateFilter: z.string(),
-  titleFilter: z.string(),
-})
+
 
 function mealsReducer(state: MealState, action: Action) {
   const { payload, type } = action
@@ -55,13 +48,7 @@ function mealsReducer(state: MealState, action: Action) {
 
 export function App() {
 
-  const form = useForm<z.infer<typeof mealsFilter>>({
-    resolver: zodResolver(mealsFilter),
-    defaultValues: {
-      dateFilter: '',
-      titleFilter: ''
-    }
-  })
+
   const initial = {
     meals: [] as MealType[]
   }
@@ -72,71 +59,39 @@ export function App() {
     dispatch({ type: 'ADD_NEW_MEAL', payload: meal })
   }
 
-  function searchMeal(data: z.infer<typeof mealsFilter>) {
+  function searchMeal(data: MealFilterType) {
     dispatch({ type: 'FILTER_MEALS', payload: data })
-    form.reset()
   }
   return (
-    <main className="bg-zinc-900">
-
-      <nav className='flex items-center justify-center gap-2'>
-        <Form {...form} >
-          <form
-            onSubmit={form.handleSubmit(searchMeal)}
-            className='flex items-center justify-center gap-2'>
-            <FormField
-              control={form.control}
-              name="titleFilter"
-              render={({ field }) =>
-                <FormItem>
-                  <FormLabel />
-                  <FormControl >
-                    <Input {...field} />
-                  </FormControl>
-                </FormItem>
-              }
-            />
-
-            <FormField
-              control={form.control}
-              name="dateFilter"
-              render={({ field }) =>
-                <FormItem>
-                  <FormLabel />
-                  <FormControl>
-                    <Input type="datetime-local" {...field} />
-                  </FormControl>
-                </FormItem>
-
-              }
-            />
-            <Button type="submit">
-              Search
-            </Button>
-            <Button onClick={(e) => {
+    <main className="m-auto bg-zinc-50">
+      {/* <MealAnalytics /> */}
+      <nav className='mt-4 grid place-content-center grid-row-2 gap-2'>
+        <div className='row'> <strong>Refeições</strong> </div>
+        <div className="flex justify-center items-center">
+          <MealInput addMeal={handleAddMeal} />
+          <MealSearch searchMeal={searchMeal} />
+          <Button variant={'link'}
+            onClick={(e) => {
               e.preventDefault()
               dispatch({ type: 'SHOW_ALL', payload: null })
-            }}>
-              Clear
-            </Button>
-          </form>
-        </Form>
-        <MealInput addMeal={handleAddMeal} />
+            }}
+          >Clear</Button>
+        </div>
       </nav>
 
-      <Table className="flex flex-col items-center justify-center rounded border w-[32rem] mx-auto my-4">
+      <Table className="flex flex-col items-center justify-center rounded border w-11/12 md:w-3/4 lg:w-[32rem] mx-auto my-4 bg-zinc-300">
         <TableHeader>
           <TableRow className="flex justify-between">
-            <TableHead className="text-xl">
+            <TableHead className="text-md lg:text-xl">
               Title
             </TableHead>
-            <TableHead className="text-xl">
+            <TableHead className="text-md lg:text-xl">
               Description
             </TableHead>
-            <TableHead className="text-xl">
+            <TableHead className="text-md lg:text-xl">
               Time
             </TableHead>
-            <TableHead className="text-xl">
+            <TableHead className="text-md lg:text-xl">
               Belongs to diet
             </TableHead>
           </TableRow>
