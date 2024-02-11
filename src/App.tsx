@@ -64,7 +64,7 @@ export function App() {
   }
   return (
     <main className="m-auto bg-zinc-50">
-      {/* <MealAnalytics /> */}
+      <MealAnalytics meals={state.meals} />
       <nav className='mt-4 grid place-content-center grid-row-2 gap-2'>
         <div className='row'> <strong>Refeições</strong> </div>
         <div className="flex justify-center items-center">
