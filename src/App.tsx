@@ -2,7 +2,6 @@ import { useReducer } from 'react'
 import { MealInput, MealType } from './MealInput'
 import { MealRecord } from './MealRecord';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from './components/ui/table';
-import { z } from 'zod'
 import { MealFilterType, MealSearch } from './MealSearch';
 import { Button } from './components/ui/button';
 import { MealAnalytics } from './MealAnalytics';
@@ -80,25 +79,25 @@ export function App() {
       </nav>
 
       <Table className="flex flex-col items-center justify-center rounded border w-11/12 md:w-3/4 lg:w-[32rem] mx-auto my-4 bg-zinc-300">
-        <TableHeader>
+        <TableHeader className="w-11/12">
           <TableRow className="flex justify-between">
-            <TableHead className="text-md lg:text-xl">
+            <TableHead className="text-md md:text-lg lg:text-xl">
               Title
             </TableHead>
-            <TableHead className="text-md lg:text-xl">
+            <TableHead className="text-md md:text-lg lg:text-xl">
               Description
             </TableHead>
-            <TableHead className="text-md lg:text-xl">
+            <TableHead className="text-md md:text-lg lg:text-xl">
               Time
             </TableHead>
-            <TableHead className="text-md lg:text-xl">
+            <TableHead className="text-md md:text-lg lg:text-xl">
               Belongs to diet
             </TableHead>
           </TableRow>
         </TableHeader>
         {
           state.meals.length > 0 ?
-            <TableBody className="">
+            <TableBody className="flex w-full justify-center">
               {state.meals.map((meal) => {
                 if (meal.show) return (
                   <MealRecord key={meal.id} id={meal.id} title={meal.title} description={meal.description} date={meal.date}
